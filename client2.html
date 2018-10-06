@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="http://localhost/socket.io/socket.io.js"></script>
+  <script>
+  /*var data = {
+    t: 13313113, //tiempo en el que se envia el msg
+    oid: "ksldklsd@dklsflk.com",  //id del cliente origen
+    oname: "chef1", //nombre del cliente origen
+    did: "f@f.com", //id del destinatario del msg
+    msg: "olakase", //msg
+    plate: "aros", //nombre del plato
+    plateid: 3231 //id del plato
+  }*/
+
+    var socket = io.connect('http://localhost:80', { 'forceNew': true, query:'loggeduser=b'});
+
+    var data = {
+      t: 13313113,
+      oid: "b",
+      oname: "chef1",
+      did: "a",
+      msg: "olakase A",
+      plate: "aros",
+      plateid: 3231
+    }
+
+    socket.on('connect', function() {
+      console.log("Connected!");
+    });
+
+    socket.on('incomingMsg', function(dataReceived, callback) {
+      console.log(dataReceived);
+      if (callback!=undefined) {
+        callback(true)
+      }
+    });
+
+    function sendMSG(m) {
+      data.msg = m
+      socket.emit('sendThat',data, function(success) {
+        if (success) {
+          console.log("enviado correctamente");
+        }
+      });
+    }
+
+  </script>
+</head>
+<body>
+  <h1>A</h1>
+</body>
+</html>
